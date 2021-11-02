@@ -41,6 +41,12 @@ class Comfy::Cms::File < ActiveRecord::Base
     where("active_storage_blobs.content_type LIKE 'image/%'").references(:blob)
   }
 
+  scope :with_label, ->(label) {
+    return unless label
+
+    where('comfy_cms_files.label LIKE ?', "%#{label}%")
+  }
+
 protected
 
   def assign_position
